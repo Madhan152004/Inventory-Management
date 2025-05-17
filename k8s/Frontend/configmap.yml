@@ -4,4 +4,4 @@ metadata:
   name: frontend-config
   namespace: inventory
 data:
-  REACT_APP_BACKEND_URL: "http://backend-service:5000"
+  REACT_APP_API_URL: "http://backend-service:5000"

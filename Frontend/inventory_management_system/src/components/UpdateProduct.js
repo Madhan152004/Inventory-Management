@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function InsertProduct() {
   const [productName, setProductName] = useState("");
@@ -11,19 +11,12 @@ export default function InsertProduct() {
 
   const { id } = useParams();
 
-  // Fetch product data if editing (id present)
   useEffect(() => {
     if (!id) return;
 
     const getProduct = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/products/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/products/${id}`);
         const data = await res.json();
 
         if (res.status === 201) {
@@ -40,16 +33,6 @@ export default function InsertProduct() {
 
     getProduct();
   }, [id]);
-
-  const setName = (e) => setProductName(e.target.value);
-  const setPrice = (e) => setProductPrice(e.target.value);
-  const setBarcode = (e) => {
-    const value = e.target.value.slice(0, 12);
-    // Optional: Only allow numeric barcode
-    if (/^\d*$/.test(value)) {
-      setProductBarcode(value);
-    }
-  };
 
   const updateProduct = async (e) => {
     e.preventDefault();
@@ -100,7 +83,7 @@ export default function InsertProduct() {
         </label>
         <input
           type="text"
-          onChange={setName}
+          onChange={(e) => setProductName(e.target.value)}
           value={productName}
           className="form-control fs-5"
           id="product_name"
@@ -113,7 +96,38 @@ export default function InsertProduct() {
         </label>
         <input
           type="number"
-          onChange={setPrice}
+          onChange={(e) => setProductPrice(e.target.value)}
           value={productPrice}
           className="form-control fs-5"
-          id="product_price_
+          id="product_price"
+          placeholder="Enter Product Price"
+          required
+        />
+
+        <label htmlFor="product_barcode" className="form-label fs-4 fw-bold mt-3">
+          Product Barcode
+        </label>
+        <input
+          type="text"
+          onChange={(e) => {
+            const value = e.target.value.slice(0, 12);
+            if (/^\d*$/.test(value)) {
+              setProductBarcode(value);
+            }
+          }}
+          value={productBarcode}
+          className="form-control fs-5"
+          id="product_barcode"
+          placeholder="Enter Product Barcode"
+          required
+        />
+
+        {error && <p className="text-danger mt-3">{error}</p>}
+
+        <button type="submit" className="btn btn-primary mt-4" disabled={loading}>
+          {loading ? "Updating..." : "Update Product"}
+        </button>
+      </form>
+    </div>
+  );
+}

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: inventory
+spec:
+  selector:
+    app: inventory-frontend
+  ports:
+  - protocol: TCP
+    port: 80 # service port
+    targetPort: 80 # container port where nginx serves content
+    nodePort: 32080 # NodePort you want to expose externally
+  type: NodePort

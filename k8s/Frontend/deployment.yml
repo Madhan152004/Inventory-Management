@@ -25,4 +25,4 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: frontend-config
-              key: REACT_APP_BACKEND_URL
+              key: REACT_APP_API_URL

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('dotenv').config(); // <== Add this line
 const mongoURI = process.env.MONGO_URI;
 
 const connectToMongo = async () => {
@@ -11,11 +12,10 @@ const connectToMongo = async () => {
     console.log("✅ Connected to MongoDB successfully!");
   } catch (error) {
     console.error("❌ MongoDB connection failed:", error);
-    process.exit(1); // Exit the app on failure
+    process.exit(1);
   }
 };
 
-// Optional: Gracefully close the connection on app termination
 process.on("SIGINT", async () => {
   await mongoose.connection.close();
   console.log("🛑 MongoDB connection closed due to app termination");

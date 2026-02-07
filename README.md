@@ -2,7 +2,7 @@
 
 A simple MERN project that lets the user insert, update, delete & get products from the MongoDB.
 
-## To Run App:
+## To Run the App:
 
 ### 1. Open the folder in vs code and run (npm install) command.
    
